@@ -3,6 +3,7 @@ package com.herokuapp.theinternet;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -26,19 +27,24 @@ public class PositiveTests {
     // maximize browser window
     driver.manage().window().maximize();
     // enter username
-    driver.findElement(By.id("username")).sendKeys("tomsmith");
+    WebElement username = driver.findElement(By.id("username"));
+    username.sendKeys("tomsmith");
     // enter password
-    driver.findElement(By.id("password")).sendKeys("SuperSecretPassword!");
+    WebElement password = driver.findElement(By.id("password"));
+    password.sendKeys("SuperSecretPassword!");
     // click login button
-    driver.findElement(By.cssSelector("button")).sendKeys(Keys.ENTER);
+    WebElement loginButton = driver.findElement(By.cssSelector("button"));
+    loginButton.click();
     // verifications:
     // new url
-    Assert.assertTrue(driver.getCurrentUrl().equals("http://the-internet.herokuapp.com/secure"));
+    Assert.assertEquals(driver.getCurrentUrl(), "http://the-internet.herokuapp.com/secure");
     // logout button is visible
-    Assert.assertNotNull(driver.findElement(By.xpath("//a[@href='/logout']")));
+    WebElement logoutButton = driver.findElement(By.xpath("//a[@href='/logout']"));
+    Assert.assertTrue(logoutButton.isDisplayed());
     // successfull login message
-    Assert.assertNotNull(driver.findElement(By.xpath("//h2[contains(text(),'Secure Area')]")));
-    
+    WebElement successMessage = driver.findElement(By.xpath("//div[contains(text(),'You logged into a secure area!')]"));
+    String expectedMessage="You logged into a secure area!";
+    Assert.assertTrue(successMessage.getText().contains(expectedMessage));
     
     //close browser
     driver.quit();
