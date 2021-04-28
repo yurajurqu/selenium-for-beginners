@@ -6,12 +6,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class NegativeTests {
 
   @Test(priority=1,groups = { "negativeTests", "smokeTests" })
-  public void wongUsernameLoginTest() {
+  @Parameters({"username","password","expectedMessage"})
+  public void negativeLoginTest(String user, String pass, String expectedMessage) {
     System.out.println("Starting wongUsenameLoginTest");
     // create driver
     System.setProperty("webdriver.gecko.driver", "src/main/resources/geckodriver.exe");
@@ -28,10 +30,10 @@ public class NegativeTests {
     driver.manage().window().maximize();
     // enter username
     WebElement username = driver.findElement(By.id("username"));
-    username.sendKeys("wronguser");
+    username.sendKeys(user);
     // enter password
     WebElement password = driver.findElement(By.id("password"));
-    password.sendKeys("SuperSecretPassword!");
+    password.sendKeys(pass);
     // click login button
     WebElement loginButton = driver.findElement(By.cssSelector("button"));
     loginButton.click();
@@ -39,13 +41,12 @@ public class NegativeTests {
     
     // wrong login message
     WebElement errorMessage = driver.findElement(By.xpath("//div[@id='flash']"));
-    String expectedMessage="Your username is invalid!";
     Assert.assertTrue(errorMessage.getText().contains(expectedMessage));
     
     //close browser
     driver.quit();
   }
-  @Test(priority=2, groups = { "negativeTests" })
+ /* @Test(priority=2, groups = { "negativeTests" })
   public void wongPasswordLoginTest() {
     System.out.println("Starting wongUsenameLoginTest");
     // create driver
@@ -79,5 +80,5 @@ public class NegativeTests {
     
     //close browser
     driver.quit();
-  }
+  }*/
 }
