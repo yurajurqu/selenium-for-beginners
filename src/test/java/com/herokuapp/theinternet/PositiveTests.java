@@ -1,7 +1,6 @@
 package com.herokuapp.theinternet;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -49,6 +48,7 @@ public class PositiveTests {
     //close browser
     driver.quit();
   }
+  
 
   private void sleep(long t) {
     try {
