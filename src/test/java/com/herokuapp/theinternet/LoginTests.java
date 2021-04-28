@@ -5,8 +5,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.*;
+
+import java.sql.Time;
+import java.util.concurrent.TimeUnit;
 
 public class LoginTests {
 
@@ -33,6 +39,9 @@ public class LoginTests {
 
     // maximize browser window
     driver.manage().window().maximize();
+
+//    implicit wait
+//    driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
   }
 
   @Test(priority=1,groups = { "positiveTests", "smokeTests" })
@@ -54,8 +63,12 @@ public class LoginTests {
     // enter password
     WebElement password = driver.findElement(By.id("password"));
     password.sendKeys("SuperSecretPassword!");
+
+    WebDriverWait wait = new WebDriverWait(driver,10);
+
     // click login button
     WebElement loginButton = driver.findElement(By.cssSelector("button"));
+    wait.until(ExpectedConditions.elementToBeClickable(loginButton));
     loginButton.click();
     // verifications:
     // new url
