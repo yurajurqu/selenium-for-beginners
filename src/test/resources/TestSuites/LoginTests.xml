@@ -3,13 +3,25 @@
 
 <suite name="NegativeTestsSuite" verbose="1" >
 
-
+  <test name="PositiveTests" >
+    <groups>
+      <run>
+        <include name="positiveTests"></include>
+      </run>
+    </groups>
+    <classes>
+      <class name="com.herokuapp.theinternet.LoginTests" />
+    </classes>
+  </test>
   <test name="NegativeUsernameTests">
     <parameter name="username" value="incorrectuser"></parameter>
     <parameter name="password" value="SuperSecretPassword!"></parameter>
     <parameter name="expectedMessage" value="Your username is invalid!"></parameter>
     <classes>
-      <class  name="com.herokuapp.theinternet.NegativeTests">
+      <class  name="com.herokuapp.theinternet.LoginTests">
+        <methods>
+          <include name="negativeLoginTest"></include>
+        </methods>
       </class>
     </classes>
   </test>
@@ -18,7 +30,10 @@
     <parameter name="password" value="incorrectpassword"></parameter>
     <parameter name="expectedMessage" value="Your password is invalid!"></parameter>
     <classes>
-      <class  name="com.herokuapp.theinternet.NegativeTests">
+      <class  name="com.herokuapp.theinternet.LoginTests">
+        <methods>
+          <include name="negativeLoginTest"></include>
+        </methods>
       </class>
     </classes>
   </test>
