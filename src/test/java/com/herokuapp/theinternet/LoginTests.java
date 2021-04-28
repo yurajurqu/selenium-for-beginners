@@ -6,17 +6,28 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class LoginTests {
 
+  private WebDriver driver;
+
+  @BeforeMethod(alwaysRun = true)
+  private void setup(){
+    // create driver
+    System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
+    driver = new ChromeDriver();
+    // maximize browser window
+    driver.manage().window().maximize();
+  }
+
   @Test(priority=1,groups = { "positiveTests", "smokeTests" })
   public void positiveLoginTest() {
     System.out.println("Starting loginTest");
-    // create driver
-    System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
-    WebDriver driver = new ChromeDriver();
+
     // open test page
     String url = "http://the-internet.herokuapp.com/login";
     driver.get(url);
@@ -25,8 +36,7 @@ public class LoginTests {
     // sleep for 3 seconds
     // sleep(3000);
 
-    // maximize browser window
-    driver.manage().window().maximize();
+
     // enter username
     WebElement username = driver.findElement(By.id("username"));
     username.sendKeys("tomsmith");
@@ -46,7 +56,11 @@ public class LoginTests {
     WebElement successMessage = driver.findElement(By.xpath("//div[contains(text(),'You logged into a secure area!')]"));
     String expectedMessage="You logged into a secure area!";
     Assert.assertTrue(successMessage.getText().contains(expectedMessage));
-    
+
+  }
+
+  @AfterMethod(alwaysRun = true)
+  private void tearDown() {
     //close browser
     driver.quit();
   }
@@ -55,9 +69,7 @@ public class LoginTests {
   @Parameters({"username","password","expectedMessage"})
   public void negativeLoginTest(String user, String pass, String expectedMessage) {
     System.out.println("Starting wongUsenameLoginTest");
-    // create driver
-    System.setProperty("webdriver.gecko.driver", "src/main/resources/geckodriver.exe");
-    WebDriver driver = new FirefoxDriver();
+
     // open test page
     String url = "http://the-internet.herokuapp.com/login";
     driver.get(url);
@@ -66,8 +78,7 @@ public class LoginTests {
     // sleep for 3 seconds
     // sleep(3000);
 
-    // maximize browser window
-    driver.manage().window().maximize();
+
     // enter username
     WebElement username = driver.findElement(By.id("username"));
     username.sendKeys(user);
@@ -83,8 +94,7 @@ public class LoginTests {
     WebElement errorMessage = driver.findElement(By.xpath("//div[@id='flash']"));
     Assert.assertTrue(errorMessage.getText().contains(expectedMessage));
 
-    //close browser
-    driver.quit();
+
   }
   private void sleep(long t) {
     try {
