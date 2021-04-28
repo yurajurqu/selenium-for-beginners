@@ -133,6 +133,23 @@ public class ExceptionTests {
     Assert.assertTrue(checkbox.isDisplayed());
 
 
+  }@Test
+  public void enableDisableElement(){
+    driver.get("http://the-internet.herokuapp.com/dynamic_controls");
+
+   WebElement enableButton = driver.findElement(By.xpath("//button[contains(text(),'Enable')]"));
+   WebElement textField = driver.findElement(By.xpath("//form[@id='input-example']/input"));
+    WebDriverWait wait = new WebDriverWait(driver, 10);
+    enableButton.click();
+//    wait.until(ExpectedConditions.invisibilityOf(checkbox));
+//    Assert.assertFalse(checkbox.isDisplayed());
+//     Assert.assertTrue(wait.until(ExpectedConditions.invisibilityOf(checkbox)));
+    wait.until(ExpectedConditions.elementToBeClickable(textField));
+
+    String inputText = "prueba";
+    textField.sendKeys(inputText);
+    Assert.assertTrue(wait.until(ExpectedConditions.textToBePresentInElementValue(textField,inputText)));
+
   }
   private void sleep(long t) {
     try {
