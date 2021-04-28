@@ -141,15 +141,13 @@ public class ExceptionTests {
    WebElement textField = driver.findElement(By.xpath("//form[@id='input-example']/input"));
     WebDriverWait wait = new WebDriverWait(driver, 10);
     enableButton.click();
-//    wait.until(ExpectedConditions.invisibilityOf(checkbox));
-//    Assert.assertFalse(checkbox.isDisplayed());
-//     Assert.assertTrue(wait.until(ExpectedConditions.invisibilityOf(checkbox)));
+
     wait.until(ExpectedConditions.elementToBeClickable(textField));
 
     String inputText = "prueba";
     textField.sendKeys(inputText);
-    Assert.assertTrue(wait.until(ExpectedConditions.textToBePresentInElementValue(textField,inputText)));
-
+    Assert.assertEquals(textField.getAttribute("value"),inputText);
+//    Assert.assertTrue(wait.until(ExpectedConditions.textToBePresentInElementValue(textField,inputText)));
   }
   private void sleep(long t) {
     try {
