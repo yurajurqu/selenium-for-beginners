@@ -112,6 +112,28 @@ public class ExceptionTests {
 
 
   }
+
+
+  @Test
+  public void staleElement(){
+    driver.get("http://the-internet.herokuapp.com/dynamic_controls");
+
+    WebElement checkbox = driver.findElement(By.id("checkbox"));
+   WebElement removeButton = driver.findElement(By.xpath("//button[contains(text(),'Remove')]"));
+    WebDriverWait wait = new WebDriverWait(driver, 10);
+    removeButton.click();
+//    wait.until(ExpectedConditions.invisibilityOf(checkbox));
+//    Assert.assertFalse(checkbox.isDisplayed());
+//     Assert.assertTrue(wait.until(ExpectedConditions.invisibilityOf(checkbox)));
+    Assert.assertTrue(wait.until(ExpectedConditions.stalenessOf(checkbox)));
+
+    WebElement addButton = driver.findElement(By.xpath("//button[contains(text(),'Add')]"));
+    addButton.click();
+    checkbox = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("checkbox")));
+    Assert.assertTrue(checkbox.isDisplayed());
+
+
+  }
   private void sleep(long t) {
     try {
       Thread.sleep(t);
