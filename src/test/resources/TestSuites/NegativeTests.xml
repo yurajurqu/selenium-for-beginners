@@ -12,7 +12,7 @@
     <classes>
       <class  name="com.herokuapp.theinternet.NegativeTests">
         <methods>
-          <include name="wongPasswordLoginTest"></include>
+          <exclude name="wongPasswordLoginTest"></exclude>
         </methods>
       </class>
     </classes>
