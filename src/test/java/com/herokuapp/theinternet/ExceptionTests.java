@@ -82,9 +82,8 @@ public class ExceptionTests {
     // finish message
 
     WebDriverWait wait = new WebDriverWait(driver, 10);
-    WebElement finishMessage = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@id='finish']/h4")));
+    Assert.assertTrue(wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//div[@id='finish']/h4"),"Hello World!")));
 
-    Assert.assertTrue(finishMessage.getText().contains("Hello World!"));
 
   }
   @Test(priority=2,groups = { "notvisible", "smokeTests" })

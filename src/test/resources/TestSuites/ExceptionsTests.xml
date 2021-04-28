@@ -9,7 +9,7 @@
     <classes>
       <class name="com.herokuapp.theinternet.ExceptionTests" >
         <methods>
-          <exclude name="timeoutTest"></exclude>
+          <include name="notSuchElementTest"></include>
         </methods>
       </class>
     </classes>
