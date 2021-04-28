@@ -48,7 +48,7 @@ public class ExceptionTests {
     driver.quit();
   }
 
-  @Test(priority=2,groups = { "notvisible", "smokeTests" })
+  @Test(priority=1, groups = { "notvisible", "smokeTests" })
   public void notVisibleTest() {
     // open test page
     String url = "http://the-internet.herokuapp.com/dynamic_loading/1";
@@ -66,8 +66,25 @@ public class ExceptionTests {
 
     Assert.assertTrue(finishMessage.getText().contains("Hello World!"));
 
-    startButton.click();
 
+
+  }
+  @Test(priority=3,groups = { "notvisible", "smokeTests" })
+  public void notSuchElementTest() {
+    // open test page
+    String url = "http://the-internet.herokuapp.com/dynamic_loading/2";
+    driver.get(url);
+
+    // click login button
+    WebElement startButton = driver.findElement(By.xpath("//div[@id='start']/button"));
+    startButton.click();
+    // verifications:
+    // finish message
+
+    WebDriverWait wait = new WebDriverWait(driver, 10);
+    WebElement finishMessage = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@id='finish']/h4")));
+
+    Assert.assertTrue(finishMessage.getText().contains("Hello World!"));
 
   }
   @Test(priority=2,groups = { "notvisible", "smokeTests" })
